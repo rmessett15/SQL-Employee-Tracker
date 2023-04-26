@@ -1,0 +1,27 @@
+{
+  "name": "sql-employee-tracker",
+  "version": "1.0.0",
+  "description": "Week-12 Challenge (SQL)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmessett15/SQL-Employee-Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmessett15/SQL-Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/rmessett15/SQL-Employee-Tracker#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.2.4",
+    "sequelize": "^6.31.0"
+  }
+}
