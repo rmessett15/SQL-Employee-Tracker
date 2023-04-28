@@ -1,5 +1,5 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../connection");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../connection');
 
 class Department extends Model {}
 
@@ -19,7 +19,7 @@ Department.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "Department",
+    modelName: 'Department',
   }
 );
 

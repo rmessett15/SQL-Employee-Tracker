@@ -1,18 +1,45 @@
 // Importing department model from the models -> blueprint of our table
 const Department = require('./Models/department');
+const Role = require('./Models/role');
+const Employee = require('./Models/employee');
 // Importing sequelize which is our telephone to the database it allows javascript to talk with mysql
-const sequelize = require("./connection");
+const sequelize = require('./connection');
+const inquirer = require('inquirer');
 
 // sync the database with our models
 sequelize.sync({ force: false }).then(() => {
-    console.log('test asynch')
-  Department.create({ name: "Accounting" });
+//   Department.create({ name: 'Accounting' });
+    options();
+    // createData();
 });
 
-console.log('Johnson')
-Department.create({ name: "HR" });
+function options() {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        message: 'What would you like to do?',
+        choices: [
+          'View All Employees',
+          'Add Employee',
+          'Update Employee Role',
+          'View All Roles',
+          'Add role',
+          'View All Departments',
+          'Add Department',
+          //   `(Move up and down to reveal more choices)`,
+        ],
+        name: 'Employee-Tracker',
+      },
+    ])
+    .then((data) => {
+      console.log(data);
+    })
+    .then(Department.create({ name: 'Accounting' }));
+}
 
-// Create inquirer prompt that asks what i want to do departments but the only prompt as of now will be to list all departments 
-// inquirer.prompt{
-
+// function createData(choices, data) {
+//     choices = `${data.Employee-Tracker}`;
+//     data = Department.create({ name: "Accounting" });
+//     return (choices, data);
 // }
