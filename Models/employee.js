@@ -14,13 +14,17 @@ Employee.init(
       type: DataTypes.STRING,
     },
     last_name: {
-        type: DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     role_id: {
-        type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
+      // references: {
+      //   model: "Role",
+      //   key: "id",
+      // },
     },
     manager_id: {
-        type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
     },
   },
   {
