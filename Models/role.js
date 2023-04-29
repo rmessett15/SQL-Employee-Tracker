@@ -23,7 +23,6 @@ Role.init(
         //   key: 'id',
         // },
     },
-    
   },
   {
     sequelize,

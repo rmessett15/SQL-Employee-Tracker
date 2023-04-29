@@ -33,10 +33,15 @@ function options() {
         name: 'Employee-Tracker',
       },
     ])
-    .then((data) => {
-      console.log(data);
+    .then((answer) => {
+      console.log(answer);
+      console.log(db.query(SELECT * FROM, Department));
+
+      // if (answer === 'View All Departments') {
+      //   viewAllDepartments();
+      // }
     })
-    .then(Department.create({ name: 'Accounting' }));
+    // .then(Department.create({ name: 'Accounting' }));
 }
 
 // function createData(choices, data) {
@@ -44,3 +49,7 @@ function options() {
 //     data = Department.create({ name: "Accounting" });
 //     return (choices, data);
 // }
+
+// const viewAllDepartments = () => {
+//   return Query("SELECT * FROM Departments");
+// };
