@@ -18,10 +18,10 @@ Role.init(
     },
     department_id: {
         type: DataTypes.INTEGER,
-        // references: {
-        //   model: 'Department',
-        //   key: 'id',
-        // },
+        references: {
+          model: 'Department',
+          key: 'id',
+        },
     },
   },
   {
