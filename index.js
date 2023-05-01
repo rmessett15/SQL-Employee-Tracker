@@ -258,18 +258,12 @@ const updateEmployeeRole = async () => {
 
 // Change Database structure to look more like mock up (add role names)
 // Add cool title page
-// Figure out why addRole and addEmployee are inserting null values into their corresponding tables
-// Figure out how to update an employee role
-// Update my database so its not messy and full of nulls and errors
 // Do my assignment strictly with sequelize
 
-// ********* Add last names to prompts within what Phillip and I changed, as well as the question format from asking about ids to names or titles
-// Update database so its not messy and full of errors
-// Add last names to prompts
-// How to add null to list of manager options????
+// Add last names to prompts for updating role and updating employee role
+// Figure out how to add null to list of manager options
 
-// Add readme.md
-// Organize file structure/get rid of any files not needed
-// Comment code base and format
+// Finish README.md
+// Finish screen recoding and add to README.md
 
 // BONUS
