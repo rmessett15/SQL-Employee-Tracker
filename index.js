@@ -10,15 +10,12 @@ const sequelize = require("./connection");
 // Importing inquirer (for prompting user)
 const inquirer = require("inquirer");
 
-// ?????????????????????????????????
-// sync the database with our models
+// Syncs the database with created models
 sequelize.sync({ force: false }).then(() => {
-  //   Department.create({ name: 'Accounting' });
   options();
-  // createData();
 });
-// ?????????????????????????????????
 
+// Function written to prompt the user with different options to navigate the database
 function options() {
   inquirer
     .prompt([
@@ -38,8 +35,8 @@ function options() {
         name: "employeeTracker",
       },
     ])
+    // Takes in user choice, checks with equality, and then fires off corresponding function
     .then((answer) => {
-      console.log(answer);
       if (answer.employeeTracker === "View All Departments") {
         viewAllDepartments();
       } else if (answer.employeeTracker === "View All Roles") {
@@ -60,30 +57,38 @@ function options() {
 
 // -------------- VIEW -----------------
 
+// View all departments
 const viewAllDepartments = () => {
   var departments = Department.findAll({ raw: true }).then((data) => {
     console.table(data);
+    // Fires off prompts after table is displayed
     options();
   });
 };
 
+// View all roles
 const viewAllRoles = () => {
   var roles = Role.findAll({ raw: true }).then((data) => {
     console.table(data);
+    // Fires off prompts after table is displayed
     options();
   });
 };
 
+// View all employees
 const viewAllEmployees = () => {
   var employees = Employee.findAll({ raw: true }).then((data) => {
     console.table(data);
+    // Fires off prompts after table is displayed
     options();
   });
 };
 
-// ----------------- ADD --------------------
+// -------------- ADD -----------------
 
+// Add department
 const addDepartment = () => {
+  // Prompts user for name of new department
   inquirer
     .prompt([
       {
@@ -92,26 +97,30 @@ const addDepartment = () => {
         name: "addDepartment",
       },
     ])
+    // Takes in user input and adds answer to database
     .then((answer) => {
       Department.create({ name: answer.addDepartment }).then((data) => {
+        // Fires off prompts after updating database
         options();
       });
     });
 };
 
+// Add role
 const addRole = async () => {
-  // SELECT id AS VALUE, name AS name FROM Department;
+  // Same as -> SELECT id AS VALUE, name AS name FROM Department;
   let departments = await Department.findAll({
     attributes: [
       ["id", "value"],
       ["name", "name"],
     ],
   });
-  // console.log(departments);
+  // Restructures raw data
   departments = departments.map((department) =>
     department.get({ plain: true })
   );
-  // console.log(departments);
+
+  // Prompts user for new role name, salary, and corresponding department
   inquirer
     .prompt([
       {
@@ -131,13 +140,16 @@ const addRole = async () => {
         choices: departments,
       },
     ])
+    // Takes in user inputs and adds answers to database
     .then((answer) => {
       Role.create(answer).then((data) => {
+        // Fires off prompts after updating database
         options();
       });
     });
 };
 
+// Add employee
 const addEmployee = async () => {
   let roles = await Role.findAll({
     attributes: [
@@ -146,13 +158,17 @@ const addEmployee = async () => {
     ],
   });
   roles = roles.map((role) => role.get({ plain: true }));
+
   let managers = await Employee.findAll({
     attributes: [
       ["id", "value"],
       ["first_name", "name"],
     ],
   });
+  // Restructures raw data
   managers = managers.map((manager) => manager.get({ plain: true }));
+
+  // Prompts user for first name, last name, role, and corresponding manager
   inquirer
     .prompt([
       {
@@ -178,15 +194,18 @@ const addEmployee = async () => {
         choices: managers,
       },
     ])
+    // Takes in user inputs and adds answers to database
     .then((answer) => {
       Employee.create(answer).then((data) => {
+        // Fires off prompts after updating database
         options();
       });
     });
 };
 
-// -------------------- UPDATE ----------------------
+// -------------- UPDATE -----------------
 
+// Update employee role
 const updateEmployeeRole = async () => {
   let employees = await Employee.findAll({
     attributes: [
@@ -194,6 +213,7 @@ const updateEmployeeRole = async () => {
       ["first_name", "name"],
     ],
   });
+  // Restructures raw data
   employees = employees.map((employee) => employee.get({ plain: true }));
 
   let roles = await Role.findAll({
@@ -202,7 +222,10 @@ const updateEmployeeRole = async () => {
       ["title", "name"],
     ],
   });
+  // Restructures raw data
   roles = roles.map((role) => role.get({ plain: true }));
+
+  // Prompts user to select employee whose role will be updated, and new role of said employee
   inquirer
     .prompt([
       {
@@ -219,12 +242,15 @@ const updateEmployeeRole = async () => {
         choices: roles,
       },
     ])
+    // Takes in user inputs and adds answers to database
     .then((answer) => {
+      // Gives point of reference within database to where data should be updated
       Employee.update(answer, {
         where: {
           id: answer.id,
         },
       }).then((data) => {
+        // Fires off prompts after updating database
         options();
       });
     });

@@ -1,3 +1,5 @@
+// Seeds role table with json data
+
 const sequelize = require("../connection");
 const Role = require("../Models/role");
 

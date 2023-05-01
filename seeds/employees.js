@@ -1,3 +1,5 @@
+// Seeds employee table with json data
+
 const sequelize = require("../connection");
 const Employee = require("../Models/employee");
 

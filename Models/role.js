@@ -1,5 +1,7 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../connection');
+// Model for structuring role table
+
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require("../connection");
 
 class Role extends Model {}
 
@@ -14,14 +16,14 @@ Role.init(
       type: DataTypes.STRING,
     },
     salary: {
-        type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL,
     },
     department_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Department',
-          key: 'id',
-        },
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Department",
+        key: "id",
+      },
     },
   },
   {
@@ -29,7 +31,7 @@ Role.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'Role',
+    modelName: "Role",
   }
 );
 

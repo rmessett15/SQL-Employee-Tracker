@@ -1,3 +1,5 @@
+// Model for structuring employee table
+
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../connection");
 
