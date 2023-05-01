@@ -52,6 +52,8 @@ function options() {
         addRole();
       } else if (answer.employeeTracker === "Add Employee") {
         addEmployee();
+      } else {
+        updateEmployeeRole();
       }
     });
 }
@@ -97,33 +99,132 @@ const addDepartment = () => {
     });
 };
 
-const addRole = () => {
+const addRole = async () => {
+  // SELECT id AS VALUE, name AS name FROM Department;
+  let departments = await Department.findAll({
+    attributes: [
+      ["id", "value"],
+      ["name", "name"],
+    ],
+  });
+  // console.log(departments);
+  departments = departments.map((department) =>
+    department.get({ plain: true })
+  );
+  // console.log(departments);
   inquirer
     .prompt([
       {
         type: "input",
         message: "What is the name of the role?",
-        name: "addRole",
+        name: "title",
+      },
+      {
+        type: "input",
+        message: "What would you like the salary to be?",
+        name: "salary",
+      },
+      {
+        type: "list",
+        message: "What department would you like to add this new role to?",
+        name: "department_id",
+        choices: departments,
       },
     ])
     .then((answer) => {
-      Role.create({ name: answer.addRole }).then((data) => {
+      Role.create(answer).then((data) => {
         options();
       });
     });
 };
 
-const addEmployee = () => {
+const addEmployee = async () => {
+  let roles = await Role.findAll({
+    attributes: [
+      ["id", "value"],
+      ["title", "name"],
+    ],
+  });
+  roles = roles.map((role) => role.get({ plain: true }));
+  let managers = await Employee.findAll({
+    attributes: [
+      ["id", "value"],
+      ["first_name", "name"],
+    ],
+  });
+  managers = managers.map((manager) => manager.get({ plain: true }));
   inquirer
     .prompt([
       {
         type: "input",
-        message: "What is the name of the new employee?",
-        name: "addEmployee",
+        message: "What is the first name of the new employee?",
+        name: "first_name",
+      },
+      {
+        type: "input",
+        message: "What is the last name of the new employee?",
+        name: "last_name",
+      },
+      {
+        type: "list",
+        message: "What is the role of the new employee?",
+        name: "role_id",
+        choices: roles,
+      },
+      {
+        type: "list",
+        message: "What manager would you like to assign to the new employee?",
+        name: "manager_id",
+        choices: managers,
       },
     ])
     .then((answer) => {
-      Employee.create({ name: answer.addEmployee }).then((data) => {
+      Employee.create(answer).then((data) => {
+        options();
+      });
+    });
+};
+
+// -------------------- UPDATE ----------------------
+
+const updateEmployeeRole = async () => {
+  let employees = await Employee.findAll({
+    attributes: [
+      ["id", "value"],
+      ["first_name", "name"],
+    ],
+  });
+  employees = employees.map((employee) => employee.get({ plain: true }));
+
+  let roles = await Role.findAll({
+    attributes: [
+      ["id", "value"],
+      ["title", "name"],
+    ],
+  });
+  roles = roles.map((role) => role.get({ plain: true }));
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Who is the employee whose role you would like to update?",
+        name: "id",
+        choices: employees,
+      },
+      {
+        type: "list",
+        message:
+          "What is the name of the updated role would you like to assign to this employee?",
+        name: "role_id",
+        choices: roles,
+      },
+    ])
+    .then((answer) => {
+      Employee.update(answer, {
+        where: {
+          id: answer.id,
+        },
+      }).then((data) => {
         options();
       });
     });
@@ -133,6 +234,13 @@ const addEmployee = () => {
 // Add cool title page
 // Figure out why addRole and addEmployee are inserting null values into their corresponding tables
 // Figure out how to update an employee role
+// Update my database so its not messy and full of nulls and errors
+// Do my assignment strictly with sequelize
+
+// ********* Add last names to prompts within what Phillip and I changed, as well as the question format from asking about ids to names or titles
+// Update database so its not messy and full of errors
+// Add last names to prompts
+// How to add null to list of manager options????
 
 // Add readme.md
 // Organize file structure/get rid of any files not needed

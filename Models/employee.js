@@ -25,6 +25,7 @@ Employee.init(
     },
     manager_id: {
       type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {
