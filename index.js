@@ -71,9 +71,10 @@ const viewAllRoles = () => {
     console.table(
       data.map((role) => {
         return {
+          id: role.id,
           title: role.title,
           salary: role.salary,
-          department_name: role["Department.name"],
+          department: role["Department.name"],
         };
       })
     );
@@ -97,9 +98,12 @@ const viewAllEmployees = () => {
     console.table(
       data.map((employee) => {
         return {
-          name: employee.first_name,
-          lastName: employee.last_name,
-          role: employee["Role.title"],
+          id: employee.id,
+          first_name: employee.first_name,
+          last_name: employee.last_name,
+          title: employee["Role.title"],
+          department: employee["Role.Department.name"],
+          salary: employee["Role.salary"],
           manager: employeeLookup[employee.manager_id],
         };
       })
@@ -302,6 +306,8 @@ const updateEmployeeRole = async () => {
 // Add cool title page
 // Do my assignment strictly with sequelize
 // Add any additional comments and comment new index page
+
+// *****Figure out how to make it so managers show null not undefined within employees table
 
 // Figure out how to add null to list of manager options
 
