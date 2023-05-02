@@ -66,9 +66,11 @@ const viewAllDepartments = () => {
 const viewAllRoles = () => {
   var roles = Role.findAll({
     raw: true,
+    // Joining Department table and Role table
     include: [{ model: Department }],
   }).then((data) => {
     console.table(
+      // Loops through data and returns new object, used to format tables
       data.map((role) => {
         return {
           id: role.id,
@@ -87,15 +89,18 @@ const viewAllRoles = () => {
 const viewAllEmployees = () => {
   var employees = Employee.findAll({
     raw: true,
+    // Joining Role table, and Department table with Employee table
     include: [{ model: Role, include: [{ model: Department }] }],
   }).then((data) => {
     const employeeLookup = {};
+    // For loop used to grab employee names to be inserted below into managers column in newly created table
     for (var i = 0; i < data.length; i++) {
       const employee = data[i];
       employeeLookup[employee.id] =
         employee.first_name + " " + employee.last_name;
     }
     console.table(
+      // Loops through data and returns new object, used to format tables
       data.map((employee) => {
         return {
           id: employee.id,
@@ -305,11 +310,10 @@ const updateEmployeeRole = async () => {
 
 // Add cool title page
 // Do my assignment strictly with sequelize
-// Add any additional comments and comment new index page
 
 // *****Figure out how to make it so managers show null not undefined within employees table
 
-// Figure out how to add null to list of manager options
+// Figure out how to add "None", not "null" to list of manager options
 
 // Finish README.md
 // Finish screen recoding and add to README.md
