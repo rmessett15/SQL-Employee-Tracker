@@ -3,6 +3,7 @@ const { Department, Role, Employee } = require("./Models");
 
 // Importing sequelize which is our telephone to the database it allows javascript to talk with mysql
 const sequelize = require("./connection");
+
 // Importing inquirer (for prompting user)
 const inquirer = require("inquirer");
 
