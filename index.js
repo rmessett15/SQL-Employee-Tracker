@@ -1,9 +1,10 @@
 // Importing Department model from the models folder -> blueprint of our table
-const Department = require("./Models/department");
+// const Department = require("./Models/department");
 // Importing Role model from the models folder -> blueprint of our table
-const Role = require("./Models/role");
+// const Role = require("./Models/role");
 // Importing Employee model from the models folder -> blueprint of our table
-const Employee = require("./Models/employee");
+// const Employee = require("./Models/employee");
+const { Department, Role, Employee } = require('./Models');
 
 // Importing sequelize which is our telephone to the database it allows javascript to talk with mysql
 const sequelize = require("./connection");
@@ -68,8 +69,14 @@ const viewAllDepartments = () => {
 
 // View all roles
 const viewAllRoles = () => {
-  var roles = Role.findAll({ raw: true }).then((data) => {
+  var roles = Role.findAll({
+    raw: true,
+    include: [{ model: Department }],
+    include:
+      "SELECT Role.id, Role.title, Department.name, Role.salary FROM Role LEFT JOIN Department on Role.department_id = Department.id;",
+  }).then((data) => {
     console.table(data);
+
     // Fires off prompts after table is displayed
     options();
   });
@@ -157,16 +164,24 @@ const addEmployee = async () => {
       ["title", "name"],
     ],
   });
+  // Restructures raw data
   roles = roles.map((role) => role.get({ plain: true }));
 
   let managers = await Employee.findAll({
     attributes: [
       ["id", "value"],
       ["first_name", "name"],
+      ["last_name", "lastName"],
     ],
   });
   // Restructures raw data
-  managers = managers.map((manager) => manager.get({ plain: true }));
+  managers = managers.map((manager) => {
+    manager.get({ plain: true })
+    const managerInfo = manager.get();
+    console.log(managerInfo);
+    return {name: `${managerInfo.name} ${managerInfo.lastName}`, value: managerInfo.value};
+  });
+  managers.push({ type: "Null Manager", value: null });
 
   // Prompts user for first name, last name, role, and corresponding manager
   inquirer
@@ -196,6 +211,7 @@ const addEmployee = async () => {
     ])
     // Takes in user inputs and adds answers to database
     .then((answer) => {
+      console.log(answer);
       Employee.create(answer).then((data) => {
         // Fires off prompts after updating database
         options();
@@ -211,10 +227,15 @@ const updateEmployeeRole = async () => {
     attributes: [
       ["id", "value"],
       ["first_name", "name"],
+      // ["last_name", "lastName"],
     ],
   });
   // Restructures raw data
-  employees = employees.map((employee) => employee.get({ plain: true }));
+  employees = employees.map((employee) => {
+    employee.get({ plain: true });
+    const employeeInfo = employee.get()
+    return `${employeeInfo.name} ${employeeInfo.lastName}`
+  });
 
   let roles = await Role.findAll({
     attributes: [
@@ -256,12 +277,13 @@ const updateEmployeeRole = async () => {
     });
 };
 
-// Change Database structure to look more like mock up (add role names)
+// Change Database structure to look more like mock up (add role names) -> add department names and manager names, instead of department ids and manager ids, and combine roles table with employee table
 // Add cool title page
 // Do my assignment strictly with sequelize
 
 // Add last names to prompts for updating role and updating employee role
 // Figure out how to add null to list of manager options
+// Trouble shoot error with adding an employee
 
 // Finish README.md
 // Finish screen recoding and add to README.md
