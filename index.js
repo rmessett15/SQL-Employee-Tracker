@@ -67,11 +67,16 @@ const viewAllRoles = () => {
   var roles = Role.findAll({
     raw: true,
     include: [{ model: Department }],
-    // include:
-    //   "SELECT Role.id, Role.title, Department.name, Role.salary FROM Role LEFT JOIN Department on Role.department_id = Department.id;",
   }).then((data) => {
-    console.table(data);
-
+    console.table(
+      data.map((role) => {
+        return {
+          title: role.title,
+          salary: role.salary,
+          department_name: role["Department.name"],
+        };
+      })
+    );
     // Fires off prompts after table is displayed
     options();
   });
@@ -79,8 +84,26 @@ const viewAllRoles = () => {
 
 // View all employees
 const viewAllEmployees = () => {
-  var employees = Employee.findAll({ raw: true }).then((data) => {
-    console.table(data);
+  var employees = Employee.findAll({
+    raw: true,
+    include: [{ model: Role, include: [{ model: Department }] }],
+  }).then((data) => {
+    const employeeLookup = {};
+    for (var i = 0; i < data.length; i++) {
+      const employee = data[i];
+      employeeLookup[employee.id] =
+        employee.first_name + " " + employee.last_name;
+    }
+    console.table(
+      data.map((employee) => {
+        return {
+          name: employee.first_name,
+          lastName: employee.last_name,
+          role: employee["Role.title"],
+          manager: employeeLookup[employee.manager_id],
+        };
+      })
+    );
     // Fires off prompts after table is displayed
     options();
   });
@@ -173,7 +196,6 @@ const addEmployee = async () => {
   managers = managers.map((manager) => {
     manager.get({ plain: true });
     const managerInfo = manager.get();
-    console.log(managerInfo);
     return {
       name: `${managerInfo.name} ${managerInfo.lastName}`,
       value: managerInfo.value,
@@ -209,7 +231,6 @@ const addEmployee = async () => {
     ])
     // Takes in user inputs and adds answers to database
     .then((answer) => {
-      console.log(answer);
       Employee.create(answer).then((data) => {
         // Fires off prompts after updating database
         options();
@@ -278,13 +299,11 @@ const updateEmployeeRole = async () => {
     });
 };
 
-// Change Database structure to look more like mock up (add role names) -> add department names and manager names, instead of department ids and manager ids, and combine roles table with employee table
 // Add cool title page
 // Do my assignment strictly with sequelize
+// Add any additional comments and comment new index page
 
-// Add last names to prompts for updating role and updating employee role
 // Figure out how to add null to list of manager options
-// Trouble shoot error with adding an employee
 
 // Finish README.md
 // Finish screen recoding and add to README.md

@@ -12,4 +12,19 @@ Department.hasMany(Role, {
   onDelete: "CASCADE",
 });
 
+Employee.belongsTo(Role, {
+  foreignKey: "role_id",
+  onDelete: "CASCADE",
+});
+
+Role.hasOne(Employee, {
+  foreignKey: "role_id",
+  onDelete: "CASCADE",
+});
+
+Employee.hasOne(Employee, {
+  foreignKey: "manager_id",
+  onDelete: "CASCADE",
+});
+
 module.exports = { Department, Role, Employee }
