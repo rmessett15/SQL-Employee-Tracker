@@ -91,7 +91,7 @@ Features of this application include the users ability to view, and manage the d
 
 ## Usage Information
 
-This application is powered by Express meaning for it to function properly, there needs to be a server running in the background. To start the server, navigate to the directory of the application, install all dependencies (npm i), then type the command npm start (or node index.js). A message should then display in the command line saying "App listening at http://localhost:3001 🚀". Once the server is running, then navigate to the front end of the application directly from the command line by holding command and clicking the link http://localhost:3001. From there, users can pull up any existing notes saved to the database or create new notes, which once saved will be pushed to the database and persisted.
+Usage of this application is very intuitive, once the application is started (see installation section for instructions on how to get the application set up and running), the user will then be prompted to select from various choices allowing them to either VIEW a Department, Role, or Employee table, ADD a Department, Role, or Employee to the database, or to UPDATE a particular Employee's Role. If the user chooses to ADD or UPDATE the database, their choice will then be reflected when the user then VIEWS the particular table that was UPDATED.
 
 ## Contribution Guidelines
 
