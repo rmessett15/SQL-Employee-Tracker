@@ -308,17 +308,3 @@ const updateEmployeeRole = async () => {
       });
     });
 };
-
-// TODO'S
-
-// Add cool title page
-
-// Do my assignment strictly with sequelize
-
-// *****Figure out how to make it so managers show null not undefined within employees table
-
-// Figure out how to add "None", not "null" to list of manager options
-
-// Finish README.md
-
-// BONUS
