@@ -53,12 +53,12 @@ https://drive.google.com/file/d/1Zeat6kI6-0sAyqtCYQVErqzGD6215eBb/view
 
 ## Technologies Used
 
-This project is powered by Express.js, Node.js (v16.19.1), and JavaScript. It utilizes uniqid (node package manager), and file system module (node package manager) as dependencies, and utilized an application called Insomnia to test GET, POST, and DELETE request routes without needing a front end framework built out.
+This application is powered by Node.js (v16.19.1), JavaScript and SQL. It utilizes the node package manager (npm) dependencies sequelize (v6.31.0), mysql2 (v3.2.4), dotenv (16.0.3v), inquirer (v8.2.4), and chalk (v5.2.0).
 
 ## Installation
 
 1. Clone the repo:
-   git clone https://github.com/rmessett15/Note-Taker.git
+   git clone https://github.com/rmessett15/SQL-Employee-Tracker.git
 
 2. Open in VS Code. If you do not have VS code you must install it.
 
@@ -66,19 +66,28 @@ This project is powered by Express.js, Node.js (v16.19.1), and JavaScript. It ut
 
 4. Once node.js v16 is installed, in the terminal, utilize the command npm init -y to initialize and create a package.json where project files will be stored.
 
-5. Next, use the terminal to run the command npm i to install the dependencies associated with this application (developers may need to install express and uniqid directly from the command line, to do so the command for express will be npm i express to install the latests version of Express framework globally so that it can be used within the node terminal, and npm i uniqid to install the latest version of uniqid).
+5. Next, use the terminal to run the command npm i to install the dependencies associated with this application (developers may need to install dependencies directly from the command line).
+   
+      Commands to install each dependency:
+         - Command for sequelize will be npm i sequelize
+         - Command for mysql2 will be npm i mysql2
+         - Command for dotenv will be npm i dotenv
+         - Command for inquirer will be npm i inquirer@8.2.4
+         - Command for chalk will be npm i chalk
 
-6. To run the server, within the terminal, type the command npm start or node server.js.
+6. Once all dependencies are installed, you will need to create the database. To do this you will need to navigate to the directory db directory containing the schema.sql file. Once there, you will need to open up a MySQL shell to run the command source schema.sql.
 
-7. Once the server is running, users can then access the front end of the application within the browser to observe full functionality of the site.
+7. Once the database has been created, you will then need to seed the database (this will also create the model structure for the tables within the database). To do this, navigate to the root directory and run all the files associated within the seeds folder. This needs to be done from the root directory because the.env file lives within the root. The commands will look like the following (node ./seeds/departments, node ./seeds/roles, node ./seeds/employees).
+
+8. Once the database has been seeded, you will then be able to run the command npm start from the root directory to invoke the application.
 
 ## Credits
 
-Much of this application followed outline code found within the week 11 class activities (specifically activity 24). Also worked closely with one of class TA's Jenny Trevizo to handle the delete route functionality. 
+Much of this application followed outline code found within the week 13 class activities (specifically activity 10). I worked with a tutor (Phillip Loy) who helped me finalize the updating an employee role functionality. Also worked closely with one of class TA's Jenny Trevizo, and a good friend Brian Dillmann to handle joining the tables. 
 
 ## Features
 
-Features of this application include the users ability to retrieve and save notes from/to a mock database.json file which will persist on page load unless deleted.
+Features of this application include the users ability to view, and manage the departments, roles, and employees within their company all from the command line. It utilizes sequelize, allowing us to interact with the database directly through JavaScript, giving the user an interactively dynamic experience.
 
 ## Usage Information
 
